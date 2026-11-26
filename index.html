@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090b14">
+  <title>SziaSors – Találkozz valakivel!</title>
+  <meta name="description" content="Magyar random videóchat, megye szerinti kereséssel.">
+  <style>
+    :root{color-scheme:dark;--bg:#090b14;--panel:#111522;--panel2:#191f30;--line:#293148;--text:#f4f6ff;--muted:#a4acc2;--purple:#8b5cf6;--purple2:#6d42db;--green:#22c55e;--red:#ef4444}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#29204d 0,transparent 42%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+    button,input,select{font:inherit}button{cursor:pointer;border:0}a{color:#c4b5fd}
+    .wrap{max-width:1180px;margin:auto;padding:22px 18px 44px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:850;font-size:23px;letter-spacing:-.7px}.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#a78bfa,#6d28d9);box-shadow:0 8px 30px #7c3aed55;font-size:21px}
+    .pill{border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--muted);font-size:12px}.pill:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:7px}
+    .hero{text-align:center;margin:14px 0 25px}.hero h1{font-size:clamp(28px,5vw,43px);line-height:1.08;margin:0 0 10px;letter-spacing:-1.6px}.hero p{color:var(--muted);margin:0}
+    .layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(290px,.85fr);gap:18px;align-items:start}
+    .card{background:linear-gradient(180deg,#151a29,#101421);border:1px solid var(--line);border-radius:22px;box-shadow:0 20px 70px #0005}
+    .video-card{padding:12px}.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.video-box{position:relative;overflow:hidden;background:#070a12;border:1px solid #293148;border-radius:16px;aspect-ratio:4/3;display:grid;place-items:center;min-height:170px}
+    video{width:100%;height:100%;object-fit:cover;background:#070a12}.video-box video{position:absolute;inset:0}.video-label{position:absolute;z-index:2;left:11px;bottom:10px;padding:5px 9px;border-radius:9px;background:#0009;font-size:12px;color:#e5e7eb}.placeholder{color:#8e97af;text-align:center;padding:15px}.placeholder .emoji{font-size:34px;margin-bottom:6px}
+    .video-actions{display:flex;gap:9px;flex-wrap:wrap;padding:12px 2px 2px}.btn{border-radius:12px;padding:12px 16px;font-weight:750;transition:.15s}.btn:disabled{opacity:.45;cursor:not-allowed}.primary{background:linear-gradient(135deg,var(--purple),var(--purple2));color:white;box-shadow:0 8px 22px #7c3aed44}.secondary{background:#242b3d;color:#eef0fa;border:1px solid #343d55}.danger{background:#3a1c29;color:#fecdd3;border:1px solid #713044}.btn:hover:not(:disabled){filter:brightness(1.12);transform:translateY(-1px)}
+    .side{padding:19px}.side h2{font-size:18px;margin:0 0 15px}.field{margin-bottom:14px}.field label{display:block;color:#c5cbe0;font-size:13px;font-weight:650;margin-bottom:7px}.field input,.field select{width:100%;background:#0b0f1b;border:1px solid #303950;color:var(--text);padding:12px 13px;border-radius:11px;outline:none}.field input:focus,.field select:focus{border-color:var(--purple)}
+    .hint{font-size:12px;color:var(--muted);margin-top:6px}.check{display:flex;gap:9px;align-items:flex-start;color:#c6cce0;font-size:13px;margin:13px 0}.check input{margin-top:4px;accent-color:var(--purple)}
+    .full{width:100%}.status{border:1px solid var(--line);background:#0c1120;border-radius:12px;padding:12px;color:#b9c1d8;font-size:13px;margin-top:14px;min-height:46px}.status.good{border-color:#17633b;color:#bbf7d0}.status.bad{border-color:#7f1d1d;color:#fecaca}
+    .chat{margin-top:16px;padding:16px}.chat h2{font-size:16px;margin:0 0 10px}.chatlog{height:130px;overflow:auto;background:#0a0e19;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:13px;color:#cbd2e5}.chatrow{display:flex;gap:8px;margin-top:9px}.chatrow input{flex:1;min-width:0;background:#0b0f1b;border:1px solid #303950;color:white;border-radius:10px;padding:10px}.chatrow button{padding:0 15px}
+    .foot{color:#737d96;font-size:11px;text-align:center;margin-top:20px}.hidden{display:none!important}
+    @media(max-width:850px){.layout{grid-template-columns:1fr}.side{order:-1}.video-box{min-height:145px}}
+    @media(max-width:480px){.wrap{padding:14px 11px 30px}.top{margin-bottom:18px}.brand{font-size:20px}.video-grid{grid-template-columns:1fr}.video-box{aspect-ratio:16/10;min-height:180px}.hero{margin:8px 0 18px}.side{padding:15px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">✦</div><span>SziaSors</span></div>
+    <div class="pill">Magyar videóchat</div>
+  </header>
+
+  <section class="hero">
+    <h1>Ismerj meg valakit újjal.</h1>
+    <p>Egy kattintás, egy új beszélgetés. Találkozz Magyarországról.</p>
+  </section>
+
+  <main class="layout">
+    <section>
+      <div class="card video-card">
+        <div class="video-grid">
+          <div class="video-box">
+            <video id="remoteVideo" autoplay playsinline></video>
+            <div class="placeholder" id="remotePlaceholder"><div class="emoji">🌍</div><b>Várjuk a partneredet</b><div class="hint">A másik fél kamerája itt jelenik meg.</div></div>
+            <span class="video-label">Partner</span>
+          </div>
+          <div class="video-box">
+            <video id="localVideo" autoplay muted playsinline></video>
+            <div class="placeholder" id="localPlaceholder"><div class="emoji">📷</div><b>A te kamerád</b><div class="hint">Indításkor engedélyezd a kamerát.</div></div>
+            <span class="video-label">Te</span>
+          </div>
+        </div>
+        <div class="video-actions">
+          <button class="btn primary" id="startBtn">▶ Keresés indítása</button>
+          <button class="btn secondary" id="nextBtn" disabled>⟳ Következő</button>
+          <button class="btn danger" id="stopBtn" disabled>■ Leállítás</button>
+          <button class="btn secondary" id="micBtn" disabled>🎙 Mikrofon</button>
+          <button class="btn secondary" id="camBtn" disabled>📷 Kamera</button>
+        </div>
+      </div>
+      <div class="card chat">
+        <h2>Üzenetek</h2>
+        <div class="chatlog" id="chatLog">A beszélgetés üzenetei itt jelennek meg.</div>
+        <div class="chatrow"><input id="chatInput" maxlength="500" placeholder="Írj egy üzenetet…" disabled><button class="btn secondary" id="sendBtn" disabled>Küldés</button></div>
+      </div>
+    </section>
+
+    <aside class="card side">
+      <h2>Találkozási beállítások</h2>
+      <div class="field"><label for="nickname">Becenév</label><input id="nickname" maxlength="24" placeholder="Pl. Pisti92" autocomplete="nickname"><div class="hint">Ne használj teljes nevet vagy személyes adatot.</div></div>
+      <div class="field"><label for="myCounty">Te melyik megyében vagy?</label>
+        <select id="myCounty"><option value="" disabled selected>Válaszd ki a saját megyédet</option>
+          <option value="Budapest">Budapest</option><option value="Bács-Kiskun">Bács-Kiskun</option><option value="Baranya">Baranya</option><option value="Békés">Békés</option><option value="Borsod-Abaúj-Zemplén">Borsod-Abaúj-Zemplén</option><option value="Csongrád-Csanád">Csongrád-Csanád</option><option value="Fejér">Fejér</option><option value="Győr-Moson-Sopron">Győr-Moson-Sopron</option><option value="Hajdú-Bihar">Hajdú-Bihar</option><option value="Heves">Heves</option><option value="Jász-Nagykun-Szolnok">Jász-Nagykun-Szolnok</option><option value="Komárom-Esztergom">Komárom-Esztergom</option><option value="Nógrád">Nógrád</option><option value="Pest">Pest</option><option value="Somogy">Somogy</option><option value="Szabolcs-Szatmár-Bereg">Szabolcs-Szatmár-Bereg</option><option value="Tolna">Tolna</option><option value="Vas">Vas</option><option value="Veszprém">Veszprém</option><option value="Zala">Zala</option></select>
+      </div>
+      <div class="field"><label for="county">Melyik megyéből keressünk partnert?</label>
+        <select id="county">
+          <option value="any">🎲 Bármelyik megye – random</option>
+          
+          <option value="Budapest">Budapest</option><option value="Bács-Kiskun">Bács-Kiskun</option><option value="Baranya">Baranya</option><option value="Békés">Békés</option><option value="Borsod-Abaúj-Zemplén">Borsod-Abaúj-Zemplén</option><option value="Csongrád-Csanád">Csongrád-Csanád</option><option value="Fejér">Fejér</option><option value="Győr-Moson-Sopron">Győr-Moson-Sopron</option><option value="Hajdú-Bihar">Hajdú-Bihar</option><option value="Heves">Heves</option><option value="Jász-Nagykun-Szolnok">Jász-Nagykun-Szolnok</option><option value="Komárom-Esztergom">Komárom-Esztergom</option><option value="Nógrád">Nógrád</option><option value="Pest">Pest</option><option value="Somogy">Somogy</option><option value="Szabolcs-Szatmár-Bereg">Szabolcs-Szatmár-Bereg</option><option value="Tolna">Tolna</option><option value="Vas">Vas</option><option value="Veszprém">Veszprém</option><option value="Zala">Zala</option>
+        </select>
+      </div>
+      <div class="field"><label for="ageGroup">Korosztály</label><select id="ageGroup"><option value="adult">18 év felett</option><option value="teen" disabled>18 év alatt – jelenleg nem elérhető</option></select><div class="hint">A jelenlegi induló verzió kizárólag felnőtt párosítást engedélyez. Kiskorúak videóchatje életkor-ellenőrzés és külön biztonsági rendszer nélkül nem aktiválható.</div></div>
+      <label class="check"><input type="checkbox" id="adultConfirm"><span>Elmúltam 18 éves, és elfogadom, hogy a véletlen videóchatben idegenekkel találkozhatok.</span></label>
+      <label class="check"><input type="checkbox" id="rulesConfirm"><span>Elfogadom a közösségi szabályokat: nem mutatok be jogellenes, zaklató vagy szexuális tartalmat, és tiszteletben tartom mások határait.</span></label>
+      <button class="btn primary full" id="startSideBtn">Keresés indítása</button>
+      <div class="status" id="status" role="status">Adj meg egy becenevet, majd indítsd el a keresést.</div>
+      <p class="hint">A kamera és mikrofon használatához HTTPS és böngészőengedély szükséges. A videóhívás csak akkor indul, ha a másik fél is csatlakozott.</p>
+    </aside>
+  </main>
+  <div class="foot">SziaSors • Böngészőből használható • Ne ossz meg személyes adatokat idegenekkel.</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+<script>
+(() => {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBiuGNminiFE-qC69FQxmaBsZW-KVZuv4E",
+    authDomain: "blackcrown-cf4e0.firebaseapp.com",
+    databaseURL: "https://blackcrown-cf4e0-default-rtdb.firebaseio.com",
+    projectId: "blackcrown-cf4e0",
+    storageBucket: "blackcrown-cf4e0.firebasestorage.app",
+    messagingSenderId: "478537031588",
+    appId: "1:478537031588:web:5a2f21f2f7704988852b31",
+    measurementId: "G-QFJY6HXVD0"
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const statusEl = $("status");
+  const setStatus = (msg, type="") => { statusEl.textContent = msg; statusEl.className = "status " + type; };
+  const chatLog = $("chatLog");
+  let auth, db, user = null, localStream = null, pc = null, activeMatch = null;
+  let matchPoll = null, signalRef = null, signalListener = null, chatListener = null;
+  let isInitiator = false, handlingOffer = false, currentPeerUid = null, pendingCandidates = [];
+  let micOn = true, camOn = true;
+
+  try {
+    firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    db = firebase.database();
+  } catch (e) { setStatus("Firebase inicializálási hiba: " + e.message, "bad"); }
+
+  auth?.signInAnonymously().then(async cred => {
+    user = cred.user;
+    setStatus("Kapcsolódva. Add meg a beceneved és indíthatod a keresést.", "good");
+  }).catch(err => setStatus("Firebase bejelentkezési hiba: " + err.message, "bad"));
+
+  const api = async (action, extra={}) => {
+    const token = await user.getIdToken();
+    const res = await fetch("/api/match", {method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},body:JSON.stringify({action,...extra})});
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Szerverhiba");
+    return data;
+  };
+
+  async function getIceServers() {
+    const res = await fetch("/api/turn");
+    const data = await res.json();
+    if (!res.ok || !Array.isArray(data.iceServers)) throw new Error(data.error || "TURN beállítás nem érhető el");
+    return data.iceServers;
+  }
+
+  function addChatLine(label, text) {
+    if (chatLog.textContent === "A beszélgetés üzenetei itt jelennek meg.") chatLog.textContent = "";
+    const line = document.createElement("div");
+    const strong = document.createElement("b"); strong.textContent = label + ": ";
+    line.append(strong, document.createTextNode(text));
+    chatLog.appendChild(line); chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  async function ensureMedia() {
+    if (localStream) return localStream;
+    if (!navigator.mediaDevices?.getUserMedia) throw new Error("A böngésző nem támogatja a kamerát. HTTPS-kapcsolat szükséges.");
+    localStream = await navigator.mediaDevices.getUserMedia({video:{width:{ideal:1280},height:{ideal:720}},audio:{echoCancellation:true,noiseSuppression:true}});
+    $("localVideo").srcObject = localStream; $("localPlaceholder").classList.add("hidden");
+    $("micBtn").disabled = false; $("camBtn").disabled = false;
+    return localStream;
+  }
+
+  async function startSearch() {
+    if (!user) throw new Error("A Firebase még kapcsolódik. Próbáld újra pár másodperc múlva.");
+    const nickname = $("nickname").value.trim();
+    if (nickname.length < 2) throw new Error("A becenév legalább 2 karakter legyen.");
+    if (!$("adultConfirm").checked || !$("rulesConfirm").checked) throw new Error("A folytatáshoz erősítsd meg a 18+ nyilatkozatot és a közösségi szabályokat.");
+    if ($("ageGroup").value !== "adult") throw new Error("Ez a videóchat jelenleg csak 18 év felettieknek érhető el.");
+    await ensureMedia();
+    await stopCurrent(false);
+    $("startBtn").disabled = $("startSideBtn").disabled = true;
+    $("nextBtn").disabled = false; $("stopBtn").disabled = false;
+    chatLog.textContent = "Keresés indul…";
+    const county = $("county").value;
+    const myCounty = $("myCounty").value;
+    if (!myCounty) throw new Error("Válaszd ki, melyik megyében vagy.");
+    const result = await api("join", {nickname, county, myCounty, ageGroup:"adult", adultConfirmed:$("adultConfirm").checked});
+    if (result.matchId) await handleMatch(result);
+    else {
+      setStatus("Keresünk valakit… Hagyd nyitva ezt az oldalt.", "good");
+      matchPoll = setInterval(pollMatch, 1800);
+    }
+  }
+
+  async function pollMatch() {
+    try {
+      const result = await api("status");
+      if (result.status === "matched" && result.matchId) {
+        clearInterval(matchPoll); matchPoll = null;
+        await handleMatch(result);
+      }
+    } catch (e) { setStatus(e.message, "bad"); }
+  }
+
+  async function handleMatch(info) {
+    activeMatch = info.matchId; currentPeerUid = info.peerUid; isInitiator = !!info.isInitiator;
+    setStatus("Találtunk valakit! Kapcsolat létrehozása…", "good");
+    await setupPeer();
+    await listenSignals();
+    if (isInitiator) {
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
+      await db.ref(`matches/${activeMatch}/signals/${user.uid}/offer`).set({type:offer.type,sdp:offer.sdp});
+    }
+    $("chatInput").disabled = $("sendBtn").disabled = false;
+  }
+
+  async function setupPeer() {
+    const iceServers = await getIceServers();
+    pc = new RTCPeerConnection({iceServers});
+    localStream.getTracks().forEach(track => pc.addTrack(track, localStream));
+    pc.ontrack = event => {
+      $("remoteVideo").srcObject = event.streams[0];
+      $("remotePlaceholder").classList.add("hidden");
+      setStatus("Kapcsolódtál! Jó beszélgetést.", "good");
+    };
+    pc.onicecandidate = event => {
+      if (event.candidate && activeMatch) db.ref(`matches/${activeMatch}/signals/${user.uid}/candidates`).push(event.candidate.toJSON());
+    };
+    pc.onconnectionstatechange = () => {
+      if (pc && ["failed","disconnected","closed"].includes(pc.connectionState)) setStatus("A videókapcsolat megszakadt. Nyomj a Következő gombra.", "bad");
+    };
+  }
+
+  async function listenSignals() {
+    signalRef = db.ref(`matches/${activeMatch}/signals`);
+    const handlePeerSignal = async snap => {
+      const senderUid = snap.key;
+      if (senderUid === user.uid) return;
+      const data = snap.val() || {};
+      try {
+        if (data.offer && !pc.currentRemoteDescription) {
+          await pc.setRemoteDescription(new RTCSessionDescription(data.offer));
+          const answer = await pc.createAnswer();
+          await pc.setLocalDescription(answer);
+          await db.ref(`matches/${activeMatch}/signals/${user.uid}/answer`).set({type:answer.type,sdp:answer.sdp});
+          for (const candidate of pendingCandidates.splice(0)) {
+            try { await pc.addIceCandidate(new RTCIceCandidate(candidate)); } catch(e) {}
+          }
+        }
+        if (data.answer && isInitiator && !pc.currentRemoteDescription) {
+          await pc.setRemoteDescription(new RTCSessionDescription(data.answer));
+          for (const candidate of pendingCandidates.splice(0)) {
+            try { await pc.addIceCandidate(new RTCIceCandidate(candidate)); } catch(e) {}
+          }
+        }
+      } catch (e) {
+        console.error(e);
+        setStatus("WebRTC jelzési hiba: " + e.message, "bad");
+      }
+    };
+    signalListener = handlePeerSignal;
+    signalRef.on("child_added", handlePeerSignal);
+    signalRef.on("child_changed", handlePeerSignal);
+
+    const candidatesRef = db.ref(`matches/${activeMatch}/signals/${currentPeerUid}/candidates`);
+    candidatesRef.on("child_added", async snap => {
+      const candidate = snap.val();
+      if (!candidate) return;
+      if (pc && pc.remoteDescription) {
+        try { await pc.addIceCandidate(new RTCIceCandidate(candidate)); } catch(e) {}
+      } else {
+        pendingCandidates.push(candidate);
+      }
+    });
+    db.ref(`matches/${activeMatch}/chat`).on("child_added", snap => {
+      const m = snap.val();
+      if (m && m.uid !== user.uid) addChatLine(m.nickname || "Partner", m.text || "");
+    });
+  }
+
+  async function sendMessage() {
+    const text = $("chatInput").value.trim();
+    if (!text || !activeMatch) return;
+    await db.ref(`matches/${activeMatch}/chat`).push({uid:user.uid,nickname:$("nickname").value.trim(),text:text.slice(0,500),createdAt:Date.now()});
+    addChatLine("Te", text); $("chatInput").value = "";
+  }
+
+  async function stopCurrent(callApi=true) {
+    if (matchPoll) clearInterval(matchPoll); matchPoll = null;
+    if (activeMatch && callApi && user) { try { await api("leave"); } catch(e) {} }
+    if (signalRef && signalListener) { signalRef.off("child_added", signalListener); signalRef.off("child_changed", signalListener); }
+    if (activeMatch && currentPeerUid) db.ref(`matches/${activeMatch}/signals/${currentPeerUid}/candidates`).off();
+    if (activeMatch) db.ref(`matches/${activeMatch}/chat`).off();
+    signalRef = signalListener = chatListener = null;
+    if (pc) { pc.ontrack = null; pc.onicecandidate = null; pc.close(); pc = null; }
+    activeMatch = null; currentPeerUid = null; isInitiator = false; pendingCandidates = [];
+    $("remoteVideo").srcObject = null; $("remotePlaceholder").classList.remove("hidden");
+    $("chatInput").disabled = $("sendBtn").disabled = true;
+    $("startBtn").disabled = $("startSideBtn").disabled = false;
+    $("nextBtn").disabled = $("stopBtn").disabled = true;
+  }
+
+  $("startBtn").onclick = $("startSideBtn").onclick = async () => {
+    try { await startSearch(); } catch(e) { await stopCurrent(false); setStatus(e.message, "bad"); }
+  };
+  $("nextBtn").onclick = async () => { await stopCurrent(true); try { await startSearch(); } catch(e) { setStatus(e.message,"bad"); } };
+  $("stopBtn").onclick = async () => { await stopCurrent(true); if (localStream) {localStream.getTracks().forEach(t=>t.stop());localStream=null;$("localVideo").srcObject=null;$("localPlaceholder").classList.remove("hidden");} setStatus("A keresést leállítottad."); };
+  $("sendBtn").onclick = sendMessage;
+  $("chatInput").addEventListener("keydown", e => { if(e.key==="Enter") sendMessage(); });
+  $("micBtn").onclick = () => { if(!localStream)return; micOn=!micOn;localStream.getAudioTracks().forEach(t=>t.enabled=micOn);$("micBtn").textContent=micOn?"🎙 Mikrofon":"🔇 Mikrofon némítva"; };
+  $("camBtn").onclick = () => { if(!localStream)return; camOn=!camOn;localStream.getVideoTracks().forEach(t=>t.enabled=camOn);$("camBtn").textContent=camOn?"📷 Kamera":"🚫 Kamera kikapcsolva"; };
+  window.addEventListener("beforeunload", () => { if(activeMatch && user) navigator.sendBeacon("/api/leave", JSON.stringify({uid:user.uid})); });
+})();
+</script>
+</body>
+</html>

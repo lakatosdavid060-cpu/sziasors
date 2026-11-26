@@ -1,0 +1,23 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "matches": {
+      "$matchId": {
+        ".read": "auth != null && (data.child('user1').val() === auth.uid || data.child('user2').val() === auth.uid)",
+        "signals": {
+          "$senderUid": {
+            ".write": "auth != null && auth.uid === $senderUid && (root.child('matches').child($matchId).child('user1').val() === auth.uid || root.child('matches').child($matchId).child('user2').val() === auth.uid)",
+            ".validate": "newData.hasChildren()"
+          }
+        },
+        "chat": {
+          "$messageId": {
+            ".write": "auth != null && (root.child('matches').child($matchId).child('user1').val() === auth.uid || root.child('matches').child($matchId).child('user2').val() === auth.uid) && newData.child('uid').val() === auth.uid",
+            ".validate": "newData.hasChildren(['uid','nickname','text','createdAt']) && newData.child('text').isString() && newData.child('text').val().length <= 500"
+          }
+        }
+      }
+    }
+  }
+}
